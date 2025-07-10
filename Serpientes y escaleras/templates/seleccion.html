@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Seleccionar Personaje</title>
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='img/fondo.png') }}");
+            background-size: auto;
+            background-position: center;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .contenedor {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr 1fr;
+            column-gap: 200px;
+            align-items: center;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .lado {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .titulo {
+            width: 300px;
+            height: auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 60px);
+            grid-template-rows: repeat(4, 60px);
+            gap: 40px;
+        }
+
+        .grid img {
+            width: 80px;
+            height: 80px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .grid img:hover {
+            animation: pulse 0.5s;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(56, 108, 52, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(56, 108, 52, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(56, 108, 52, 0); }
+        }
+
+        .grid img.seleccionado {
+            opacity: 0.4;
+            pointer-events: none;
+            animation: pulse-selected 0.5s;
+        }
+
+        @keyframes pulse-selected {
+            0% { box-shadow: 0 0 0 0 rgba(56, 108, 52, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(56, 108, 52, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(56, 108, 52, 0); }
+        }
+
+        .centro {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .seleccionados {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .seleccionados img {
+            width: 50px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            width: 200px;
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #386c34;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2f582a;
+        }
+
+        .iniciar {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .mensaje {
+            color: white;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <form method="POST">
+        <div class="contenedor">
+
+            <!-- CAZADORES -->
+            <div class="lado">
+                <img src="{{ url_for('static', filename='img/titulo_cazadores.png') }}" class="titulo">
+                <div class="grid">
+                    {% for ficha in cazadores %}
+                        <label>
+                            <input type="radio" name="ficha" value="{{ ficha }}" style="display: none;">
+                            <img src="{{ url_for('static', filename='img/' ~ ficha) }}"
+                                 class="{% if ficha in seleccionados %}seleccionado{% endif %}">
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- CENTRO -->
+            <div class="centro">
+                <div class="seleccionados">
+                    {% for ficha in seleccionados %}
+                        <img src="{{ url_for('static', filename='img/' ~ ficha) }}">
+                    {% endfor %}
+                </div>
+                <input type="text" name="nombre" placeholder="NOMBRE" required>
+                <button type="submit">ENTRAR</button>
+            </div>
+
+            <!-- ANIMALES -->
+            <div class="lado">
+                <img src="{{ url_for('static', filename='img/titulo_animales.png') }}" class="titulo">
+                <div class="grid">
+                    {% for ficha in animales %}
+                        <label>
+                            <input type="radio" name="ficha" value="{{ ficha }}" style="display: none;">
+                            <img src="{{ url_for('static', filename='img/' ~ ficha) }}"
+                                 class="{% if ficha in seleccionados %}seleccionado{% endif %}">
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+    <!-- BOTÓN INICIAR PARTIDA -->
+    <div class="iniciar">
+        {% if jugadores|length >= 2 %}
+            <form method="POST" action="{{ url_for('iniciar') }}">
+                <button type="submit">INICIAR PARTIDA</button>
+            </form>
+        {% else %}
+            <p class="mensaje">Se necesitan al menos 2 jugadores para iniciar la partida.</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function actualizarSeleccionados() {
+            fetch('/seleccion_estado')
+                .then(res => res.json())
+                .then(data => {
+                    const fichas = document.querySelectorAll('input[name="ficha"]');
+                    fichas.forEach(input => {
+                        const img = input.nextElementSibling;
+                        if (data.seleccionados.includes(input.value)) {
+                            input.disabled = true;
+                            if (img) img.classList.add("seleccionado");
+                        } else {
+                            input.disabled = false;
+                            if (img) img.classList.remove("seleccionado");
+                        }
+                    });
+                });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.querySelector('form[method="POST"]:not([action])');
+            form.addEventListener("submit", () => {
+                const nombre = document.querySelector('input[name="nombre"]').value;
+                localStorage.setItem("nombre", nombre);
+            });
+
+            actualizarSeleccionados();
+            setInterval(actualizarSeleccionados, 2000);
+        });
+    </script>
+
+</body>
+</html>

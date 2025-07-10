@@ -1,0 +1,437 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Cinzel", serif;
+    height: 100vh;
+    overflow: hidden;
+    background: url("../static/image.png") no-repeat center center fixed;
+    background-size: cover;
+}
+
+.game-container {
+    display: flex;
+    height: 100vh;
+    background: transparent;
+    border: none;
+}
+
+/* Panel izquierdo */
+.left-panel {
+    width: 320px;
+    background: linear-gradient(135deg, #f5e6d3, #e8d5b7);
+    padding: 20px;
+    border-right: 4px solid #8b4513;
+    overflow-y: auto;
+}
+
+.title-section {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.game-title {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: #8b4513;
+    line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.skull-icon {
+    color: #d2691e;
+    font-size: 1.2rem;
+}
+
+/* Sección de jugadores */
+.players-section {
+    margin-bottom: 25px;
+}
+
+.player-card {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #deb887, #d2b48c);
+    border: 2px solid #8b4513;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.player-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid #8b4513;
+    margin-right: 12px;
+}
+
+.player1 {
+    background: linear-gradient(45deg, #8b4513, #a0522d);
+}
+
+.player2 {
+    background: linear-gradient(45deg, #cd853f, #deb887);
+}
+
+.player3 {
+    background: linear-gradient(45deg, #d2691e, #ff8c00);
+}
+
+.player4 {
+    background: linear-gradient(45deg, #b8860b, #daa520);
+}
+
+.player-info {
+    flex: 1;
+}
+
+.player-name {
+    font-weight: bold;
+    color: #654321;
+    font-size: 0.9rem;
+}
+
+.player-character {
+    font-size: 0.8rem;
+    color: #d2691e;
+    font-style: italic;
+}
+
+.player-position {
+    font-weight: bold;
+    color: #8b4513;
+    font-size: 0.9rem;
+}
+
+/* Sección de dados */
+.dice-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.dice-title {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #654321;
+    margin-bottom: 15px;
+    line-height: 1.3;
+}
+
+.dice-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.dice {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #654321, #8b4513);
+    border: 3px solid #d2691e;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #f5e6d3;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dice:hover {
+    transform: scale(1.1);
+}
+
+/* Botón invocar */
+.invoke-button {
+    width: 100%;
+    background: linear-gradient(135deg, #20b2aa, #008b8b);
+    border: 3px solid #006666;
+    border-radius: 12px;
+    padding: 15px;
+    font-family: "Cinzel", serif;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.invoke-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.skull-small {
+    font-size: 0.8rem;
+}
+
+/* Sección de turno */
+.turn-section {
+    background: linear-gradient(135deg, #b0e0e6, #87ceeb);
+    border: 2px solid #4682b4;
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.turn-icon {
+    font-size: 1.5rem;
+}
+
+.turn-info {
+    flex: 1;
+}
+
+.turn-label {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #2f4f4f;
+    line-height: 1.2;
+}
+
+.current-player {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.current-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #4682b4;
+}
+
+.current-name {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #2f4f4f;
+    line-height: 1.2;
+}
+
+.action {
+    color: #d2691e;
+    font-style: italic;
+}
+
+/* Tablero principal */
+.game-board {
+    flex: 1;
+    background: transparent;
+    position: relative;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header del templo */
+.temple-header {
+    background: linear-gradient(135deg, #daa520, #ffd700);
+    border: 3px solid #b8860b;
+    border-radius: 15px;
+    padding: 12px;
+    text-align: center;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.pyramid-icon {
+    font-size: 1.5rem;
+}
+
+.temple-text {
+    font-weight: bold;
+    color: #8b4513;
+    font-size: 1rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Grid del tablero */
+.board-grid {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: rgba(139, 69, 19, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid rgba(139, 69, 19, 0.3);
+}
+
+.board-row {
+    display: flex;
+    gap: 1px;
+    height: calc((100% - 18px) / 10);
+}
+
+.board-row.reverse {
+    flex-direction: row-reverse;
+}
+
+.board-cell {
+    flex: 1;
+    background: rgba(222, 184, 135, 0.4);
+    border: 1px solid rgba(139, 69, 19, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #2c1810;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    position: relative;
+    border-radius: 2px;
+    backdrop-filter: blur(1px);
+}
+
+.board-cell.goal {
+    background: rgba(50, 205, 50, 0.6);
+    border-color: rgba(34, 139, 34, 0.5);
+    color: #006400;
+}
+
+.board-cell.start {
+    background: rgba(32, 178, 170, 0.6);
+    border-color: rgba(0, 139, 139, 0.5);
+    color: #006666;
+}
+
+.meta,
+.inicio {
+    font-size: 0.6rem;
+    font-weight: normal;
+    margin-top: 2px;
+}
+
+/* Serpientes y escaleras */
+.snake,
+.ladder {
+    position: relative;
+}
+
+.snake .snake,
+.ladder .ladder {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: 1rem;
+    opacity: 0.8;
+    animation: pulse 2s infinite;
+}
+
+.snake .snake {
+    color: #228b22;
+}
+
+.ladder .ladder {
+    color: #daa520;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Footer del inicio */
+.journey-footer {
+    background: linear-gradient(135deg, #20b2aa, #008b8b);
+    border: 3px solid #006666;
+    border-radius: 15px;
+    padding: 12px;
+    text-align: center;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.aztec-symbol {
+    font-size: 1.5rem;
+}
+
+.journey-text {
+    font-weight: bold;
+    color: white;
+    font-size: 1rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+    .game-container {
+        background-size: cover;
+        background-position: center center;
+    }
+}
+
+@media (max-width: 1200px) {
+    .left-panel {
+        width: 280px;
+    }
+
+    .game-title {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .game-container {
+        flex-direction: column;
+        background-size: cover;
+    }
+
+    .left-panel {
+        width: 100%;
+        height: 200px;
+        overflow-y: auto;
+    }
+
+    .players-section {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+    }
+
+    .player-card {
+        min-width: 200px;
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-container {
+        background-size: cover;
+        background-position: center top;
+    }
+}
